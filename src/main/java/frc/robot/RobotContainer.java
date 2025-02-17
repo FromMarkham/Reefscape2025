@@ -16,6 +16,8 @@ import frc.robot.Constants.AlgaeElevatorManipulatorConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.teleop.IntakeGroundAlgaeCommand;
+import frc.robot.commands.teleop.OuttakeGroundAlgaeCommand;
 import frc.robot.subsystems.AlgaeElevatorManipulatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -33,7 +35,7 @@ import swervelib.SwerveInputStream;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-    private final AlgaeElevatorManipulatorSubsystem m_algaeElevatorManipulatorSubsystem = new AlgaeElevatorManipulatorSubsystem();
+    public static final AlgaeElevatorManipulatorSubsystem m_algaeElevatorManipulatorSubsystem = new AlgaeElevatorManipulatorSubsystem();
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private final CommandXboxController m_driverController = new CommandXboxController(
@@ -140,12 +142,8 @@ public class RobotContainer {
 
         m_driverController.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
 
-        m_driverController.leftBumper()
-                .onTrue(new InstantCommand(() -> m_algaeElevatorManipulatorSubsystem
-                        .setIntakeVoltage(AlgaeElevatorManipulatorConstants.kIntakeVoltage)));
-        m_driverController.rightBumper()
-                .onTrue(new InstantCommand(() -> m_algaeElevatorManipulatorSubsystem
-                        .setIntakeVoltage(AlgaeElevatorManipulatorConstants.kOuttakeVoltage)));
+        m_driverController.leftBumper().whileTrue(new IntakeGroundAlgaeCommand());
+        m_driverController.rightBumper().whileTrue(new OuttakeGroundAlgaeCommand());
     }
 
     /**

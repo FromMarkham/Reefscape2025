@@ -36,6 +36,10 @@ public class AlgaeElevatorManipulatorSubsystem extends SubsystemBase {
     m_motor.setVoltage(voltage);
   }
 
+  public void stopIntake() {
+    m_motor.stopMotor();
+  }
+
   public boolean hasAlgae() {
     return m_beamBreak.get();
   }
