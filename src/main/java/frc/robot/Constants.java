@@ -39,6 +39,10 @@ public final class Constants {
   public static class AlgaeElevatorManipulatorConstants {
     public static final int kMotorCANId = 30;
     public static final int kMotorCurrentLimit = 40;
+
     public static final int kbeamBreakPortId = 9;
+
+    public static final int kIntakeVoltage = 7;
+    public static final int kOuttakeVoltage = -7;
   }
 }
